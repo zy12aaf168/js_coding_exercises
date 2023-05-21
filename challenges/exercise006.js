@@ -12,6 +12,13 @@
  */
 export const sumMultiples = (arr) => {
 	if (arr === undefined) throw new Error('arr is required');
+	return arr.reduce((a,n) => {
+		if(n % 3 === 0 || n % 5 === 0){
+			return a + n;
+		}
+		return a;
+	},0)
+	
 };
 
 /**
@@ -21,6 +28,7 @@ export const sumMultiples = (arr) => {
  */
 export const isValidDNA = (str) => {
 	if (str === undefined) throw new Error('str is required');
+	return new RegExp('^[CGTA]+$').test(str);
 };
 
 /**
@@ -28,9 +36,27 @@ export const isValidDNA = (str) => {
  * @param {String} str
  * @returns {String}
  */
-export const getComplementaryDNA = (str) => {
-	if (str === undefined) throw new Error('str is required');
-};
+
+
+
+export const getComplementaryDNA = function(){
+	const dnaPairings = new Map([
+		['A', 'T'],
+		['T', 'A'],
+		['C', 'G'],
+		['G', 'C']
+	]);
+	return function(str){
+		if(isValidDNA(str)){
+			let pairingStr = "";
+			for (let i = 0; i < str.length; i++) {
+				pairingStr += dnaPairings.get(str[i]);
+			}
+			return pairingStr
+		}
+		return '';
+	};
+}()
 
 /**
  * This function should receive a number and return true/false depending on whether it is a prime number or not. A prime number is a number that can only be divided evenly by 1 and itself (for example, 7)
@@ -39,6 +65,18 @@ export const getComplementaryDNA = (str) => {
  */
 export const isItPrime = (n) => {
 	if (n === undefined) throw new Error('n is required');
+	if (n <= 1) {
+		return false;
+	  }
+	
+	  // Check if the number is divisible by any integer from 2 to the square root of the number
+	  for (let i = 2; i <= Math.sqrt(n); i++) {
+		if (n % i === 0) {
+		  return false;
+		}
+	  }
+	
+	  return true;
 };
 
 /**
@@ -55,6 +93,13 @@ export const isItPrime = (n) => {
 export const createMatrix = (n, fill) => {
 	if (n === undefined) throw new Error('n is required');
 	if (fill === undefined) throw new Error('fill is required');
+	if(n ===0) return [];
+
+	const matrix = [];
+  	for (let i = 0; i < n; i++) {
+		matrix.push(Array(n).fill(fill));    
+  	}
+	return matrix;
 };
 
 /**
@@ -72,4 +117,5 @@ export const createMatrix = (n, fill) => {
 export const areWeCovered = (staff, day) => {
 	if (staff === undefined) throw new Error('staff is required');
 	if (day === undefined) throw new Error('day is required');
+	return staff.filter(s => s.rota.includes(day)).length >= 3;
 };
