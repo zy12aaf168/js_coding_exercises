@@ -104,4 +104,26 @@ export const hexToRGB = (hexStr) => {
  */
 export const findWinner = (board) => {
 	if (board === undefined) throw new Error('board is required');
-};
+	const winnerCombinations = [
+		// Row wins
+		[[0, 0], [0, 1], [0, 2]],
+		[[1, 0], [1, 1], [1, 2]],
+		[[2, 0], [2, 1], [2, 2]],
+		// Column wins
+		[[0, 0], [1, 0], [2, 0]],
+		[[0, 1], [1, 1], [2, 1]],
+		[[0, 2], [1, 2], [2, 2]],
+		// Diagonal wins
+		[[0, 0], [1, 1], [2, 2]],
+		[[0, 2], [1, 1], [2, 0]]
+	];
+
+	for (const winningCombination of winnerCombinations){
+		const signs =  winningCombination.map(([row,col]) => board[row][col]);
+		const firstSign = signs[0];
+		if(signs.every(sign => sign && (firstSign === sign))){
+			return firstSign;
+		}
+	}
+	return null;
+}

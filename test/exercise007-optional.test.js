@@ -2,7 +2,8 @@ import {
     sumDigits,
     createRange,
     getScreentimeAlertList,
-    hexToRGB
+    hexToRGB,
+    findWinner
   } from "../challenges/exercise007-optional";
 
 describe('sumDigits', () => {
@@ -132,3 +133,46 @@ describe('hexToRGB', () => {
   });
 });
 
+describe('findWinner', () => {
+  test('should throw an error if board is not provided', () => {
+    expect(() => {
+      findWinner();
+    }).toThrow('board is required');
+  });
+
+  test('should return "X" if player X has won horizontally', () => {
+    const board = [
+      ["X", "X", "X"],
+      ["0", null, "0"],
+      ["X", null, "0"]
+    ];
+    expect(findWinner(board)).toBe("X");
+  });
+
+  test('should return "0" if player 0 has won vertically', () => {
+    const board = [
+      ["0", "X", null],
+      ["0", null, "X"],
+      ["0", null, "X"]
+    ];
+    expect(findWinner(board)).toBe("0");
+  });
+
+  test('should return null if there is no winner', () => {
+    const board = [
+      ["X", "0", null],
+      ["0", "X", "0"],
+      ["X", null, "0"]
+    ];
+    expect(findWinner(board)).toBeNull();
+  });
+
+  test('should return "X" for a diagonal win', () => {
+    const board = [
+      ["X", "0", null],
+      ["0", "X", "0"],
+      [null, null, "X"]
+    ];
+    expect(findWinner(board)).toBe("X");
+  });
+});
