@@ -8,6 +8,7 @@
  */
 export const sumDigits = (n) => {
 	if (n === undefined) throw new Error('n is required');
+	return n.reduce((a,n) => a+n,0);
 };
 
 /**
@@ -21,10 +22,13 @@ export const sumDigits = (n) => {
 export const createRange = (start, end, step) => {
 	if (start === undefined) throw new Error('start is required');
 	if (end === undefined) throw new Error('end is required');
-	if (step === undefined)
-		console.log(
-			"FYI: Optional step parameter not provided. Remove this check once you've handled the optional step!"
-		);
+	if (step === undefined){step = 1;}
+	const arr = [];
+	while(start <= end){
+		arr.push(start);
+		start += step;
+	}
+	return arr;
 };
 
 /**
@@ -59,6 +63,12 @@ export const createRange = (start, end, step) => {
 export const getScreentimeAlertList = (users, date) => {
 	if (users === undefined) throw new Error('users is required');
 	if (date === undefined) throw new Error('date is required');
+	var filtered = 
+		users
+			.filter(user => user.screenTime.some(st => st.date === date && (Object.values(st.usage).reduce((a,n) => a+n) > 100)))
+			.map(user => user.username)
+	
+	return filtered;
 };
 
 /**
