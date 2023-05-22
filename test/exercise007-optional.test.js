@@ -1,7 +1,8 @@
 import {
     sumDigits,
     createRange,
-    getScreentimeAlertList
+    getScreentimeAlertList,
+    hexToRGB
   } from "../challenges/exercise007-optional";
 
 describe('sumDigits', () => {
@@ -116,3 +117,18 @@ describe('getScreentimeAlertList', () => {
     expect(getScreentimeAlertList(users, "2019-05-04")).toEqual([beth]);
   });
 });
+
+describe('hexToRGB', () => {
+  it('should throw an error if hexStr is undefined', () => {
+    expect(() => hexToRGB()).toThrow('hexStr is required');
+  });
+
+  it('should convert a hexadecimal color code to an RGB code', () => {
+    expect(hexToRGB('#FF1133')).toEqual('rgb(255,17,51)');
+  });
+
+  it('should convert a different hexadecimal color code to the corresponding RGB code', () => {
+    expect(hexToRGB('#00FF00')).toEqual('rgb(0,255,0)');
+  });
+});
+
